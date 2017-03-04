@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <include layout="@layout/tool_bar_search"/>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout_search"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_search_list"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_last"
+            android:text="上一页"
+            android:textColor="@color/main_color"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_pager_index"
+            android:textColor="@color/main_color"
+            android:textSize="14sp"
+            android:text="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_next"
+            android:text="下一页"
+            android:textColor="@color/main_color"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>

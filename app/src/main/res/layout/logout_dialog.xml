@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@color/white"
+                android:padding="16dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+    <TextView
+        android:text="提示"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:text="确认退出当前的账号?"
+        android:textSize="16sp"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_yes"
+        android:text="是"
+        android:textSize="16sp"
+        android:layout_marginRight="10dp"
+        android:textColor="@color/main_color"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_no"
+        android:text="否"
+        android:textSize="16sp"
+        android:layout_marginRight="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/main_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

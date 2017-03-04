@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="TopTitles">
+        <item>@string/books</item>
+        <item>@string/find</item>
+        <item>@string/sort</item>
+        <item>@string/me</item>
+    </string-array>
+
+    <string-array name="SortTitles">
+        <item>@string/xuanhuan</item>
+        <item>@string/xiuzhen</item>
+        <item>@string/dushi</item>
+        <item>@string/lishi</item>
+        <item>@string/wangyou</item>
+        <item>@string/kehuan</item>
+        <item>@string/kongbu</item>
+        <item>@string/quanben</item>
+    </string-array>
+</resources>

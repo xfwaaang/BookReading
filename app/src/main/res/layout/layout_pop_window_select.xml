@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/et_select"
+        android:hint="请输入章节数字"
+        android:textSize="12sp"
+        android:padding="16dp"
+        android:inputType="numberDecimal"
+        android:background="@drawable/shape_text_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btn_yes"
+        android:text="确认"
+        android:background="@drawable/shape_text_bg"
+        android:layout_below="@id/et_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

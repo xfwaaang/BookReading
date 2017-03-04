@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#e6e6e6</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="main_color">#D96F5D</color>
+    <color name="topbar_color">#bbD96F5D</color>
+    <color name="night_color">#2B2B2B</color>
+    <color name="gray">#646464</color>
+    <color name="text_bg_def">#EEFAEE</color>
+
+    <color name="book_name_color">#6F78A7</color>
+    <color name="book_author_color">#B3B3B3</color>
+    <color name="book_brief_color">#555555</color>
+
+    <!-- 常用颜色值 -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="red">#FF0000</color>
+    <color name="gold">#FFD700</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="green">#008000</color>
+    <color name="purple">#800080</color>
+    <color name="pink">#FFC0CB</color>
+    <color name="orange">#FFA500</color>
+    <color name="lemonyellow">#FFFACD</color>
+    <color name="graywhite">#F5F5F5</color>
+    <color name="linecolor">#F0F0F0</color>
+    <color name="grayslate">#708090</color>
+    <color name="lightblue">#0083FF</color>
+
+    <color name="bb_inActiveBottomBarItemColor">#747474</color>
+    <color name="bb_darkBackgroundColor">#212121</color>
+    <color name="bb_tabletRightBorderDark">#505050</color>
+</resources>

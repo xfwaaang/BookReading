@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@color/main_color"
+              android:layout_width="match_parent"
+              android:layout_height="42dp">
+    <ImageView
+        android:id="@+id/iv_back"
+        android:src="@mipmap/back"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/et_search"
+        android:hint="可搜作者与书名"
+        android:textSize="16sp"
+        android:lines="1"
+        android:textColor="@color/gray"
+        android:textCursorDrawable="@color/gray"
+        android:backgroundTint="@color/gray"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/iv_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_search"
+        android:src="@mipmap/search"
+        android:layout_marginRight="12dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

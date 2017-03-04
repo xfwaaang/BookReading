@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_user_view"
+        android:padding="10dp"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.xfwang.bookreading.widget.CircleImageView
+            android:id="@+id/user_icon"
+            android:src="@mipmap/start_image"
+            android:layout_centerVertical="true"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/black"
+            android:text="请登录"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/user_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_user_brief"
+            android:textSize="12sp"
+            android:text="读书让我感到快乐"
+            android:textColor="@color/gray"
+            android:layout_marginLeft="22dp"
+            android:layout_marginTop="8dp"
+            android:drawableRight="@mipmap/write"
+            android:layout_toRightOf="@id/user_icon"
+            android:layout_below="@id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tv_zuji"
+        android:textColor="@color/gray"
+        android:text="我的足迹"
+        android:padding="10dp"
+        android:layout_below="@id/rl_user_view"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:drawableRight="@mipmap/zuji"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_my_love"
+        android:layout_below="@id/tv_zuji"
+        android:text="我的收藏"
+        android:textColor="@color/gray"
+        android:padding="10dp"
+        android:layout_marginTop="6dp"
+        android:background="@color/white"
+        android:drawableRight="@mipmap/shoucang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_my_download"
+        android:layout_below="@id/tv_my_love"
+        android:text="我的下载"
+        android:textColor="@color/gray"
+        android:padding="10dp"
+        android:layout_marginTop="6dp"
+        android:background="@color/white"
+        android:drawableRight="@mipmap/download"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+    <TextView
+        android:id="@+id/tv_logout"
+        android:text="退出当前账号"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/main_color"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_login_et_bg"
+        android:layout_width="150dp"
+        android:layout_height="40dp"/>
+</RelativeLayout>

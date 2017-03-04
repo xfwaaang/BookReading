@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <com.xfwang.bookreading.widget.MyViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.xfwang.bookreading.widget.MyViewPager>
+
+
+    <TextView
+        android:id="@+id/tv_chapter_name"
+        android:textSize="12sp"
+        android:padding="2dp"
+        android:layout_marginLeft="@dimen/text_pager_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <include
+        android:id="@+id/tool_bar_text_reading"
+        android:visibility="gone"
+        layout="@layout/tool_bar_text_reading_pager"/>
+
+    <TextView
+        android:id="@+id/tv_pager_index"
+        android:padding="2dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/text_pager_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <View
+        android:id="@+id/view"
+        android:layout_alignParentBottom="true"
+        android:layout_width="@dimen/text_pager_padding"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_toRightOf="@id/view"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_battery"
+            android:textSize="10sp"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:src="@mipmap/battery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_toRightOf="@id/rl"
+        android:padding="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <include
+        android:id="@+id/bottom_window"
+        layout="@layout/bottom_window_text_reading"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>

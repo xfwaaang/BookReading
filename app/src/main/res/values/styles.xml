@@ -1,0 +1,35 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="FullScreen" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="AppWelcome" parent="AppTheme">
+        <item name="android:windowBackground">@mipmap/start_image</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="NightMode" parent="AppTheme">
+        <item name="android:background">@color/night_color</item>
+    </style>
+
+
+    <style name="SortTextStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_marginRight">@dimen/text_padding</item>
+        <item name="android:layout_marginTop">@dimen/text_padding</item>
+        <item name="android:drawablePadding">@dimen/text_padding</item>
+        <item name="android:background">@drawable/selector_sort_text_bg</item>
+        <item name="android:padding">@dimen/text_padding</item>
+    </style>
+</resources>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@color/white"
+                android:padding="@dimen/item_padding"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:scaleType="fitXY"
+        android:layout_width="60dp"
+        android:layout_height="80dp"/>
+    <TextView
+        android:id="@+id/tv_book_name"
+        android:text="不休到过"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_book_author"
+        android:text="作者： 最爱吃菜花"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:textSize="12sp"
+        android:layout_toRightOf="@id/image_view"
+        android:layout_below="@id/tv_book_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_book_type"
+        android:text="类型： 玄幻小说"
+        android:textSize="12sp"
+        android:layout_marginTop="12dp"
+        android:layout_toRightOf="@id/tv_book_author"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/tv_book_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_update_time"
+        android:text="更新时间： 2015-10-26"
+        android:textSize="12sp"
+        android:layout_below="@id/tv_book_author"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_update_state"
+        android:text="更新状态： 更新中"
+        android:textSize="12sp"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/tv_update_time"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/tv_book_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:text="书籍介绍"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/main_color"
+        android:drawableLeft="@mipmap/line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_view"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView"/>
+    <TextView
+        android:id="@+id/tv_book_brief"
+        android:textSize="12sp"
+        android:layout_below="@id/textView"
+        android:text="在破败中崛起，在寂灭中复苏。
+　　   沧海成尘，雷电枯竭，那一缕幽雾又一次临近大地，世间的枷锁被打开了，一个全新的世界就此揭开神秘的一角……"
+        android:layout_marginTop="6dp"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

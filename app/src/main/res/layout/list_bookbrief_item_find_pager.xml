@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@color/white"
+                android:padding="@dimen/item_padding"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:scaleType="fitXY"
+        android:layout_width="60dp"
+        android:layout_height="80dp"/>
+
+    <TextView
+        android:id="@+id/tv_book_name"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_book_author"
+        android:textSize="12sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_book_brief"
+        android:textSize="12sp"
+        android:lines="3"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/image_view"
+        android:layout_below="@+id/tv_book_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+</RelativeLayout>

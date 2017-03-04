@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.xfwang.bookreading.widget.NoScrollGridView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/grid_view"
+          android:numColumns="2"
+          android:verticalSpacing="10dp"
+          android:horizontalSpacing="10dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+</com.xfwang.bookreading.widget.NoScrollGridView>

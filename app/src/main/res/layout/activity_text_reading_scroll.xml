@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 android:id="@+id/main_content"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appbar"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            app:navigationIcon="@mipmap/back"
+            app:titleTextColor="@color/gray"
+            app:titleTextAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tool_bar_height"
+            app:layout_scrollFlags="scroll|enterAlways"
+            >
+            <TextView
+                android:id="@+id/tv_time"
+                android:paddingLeft="@dimen/text_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </android.support.v7.widget.Toolbar>
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_chapter_name"-->
+            <!--android:textColor="@color/gray"-->
+            <!--android:textSize="16sp"-->
+            <!--android:padding="4dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"/>-->
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/text_view_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <com.xfwang.bookreading.widget.MyTextView
+            android:id="@+id/tv_content"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:lineSpacingMultiplier="1.4"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

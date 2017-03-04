@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.xfwang.bookreading.widget.FlexibleScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:overScrollMode="always"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+   <GridLayout
+               android:columnCount="2"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+      <TextView
+          android:id="@+id/tv_xuanhuan"
+          android:text="@string/xuanhuan"
+          android:drawableLeft="@mipmap/xuanhuan"
+          android:layout_columnWeight="1"
+          style="@style/SortTextStyle"
+          />
+
+      <TextView
+          android:id="@id/tv_xiuzhen"
+          android:text="@string/xiuzhen"
+          android:drawableLeft="@mipmap/xiuzhen"
+          android:layout_columnWeight="1"
+          style="@style/SortTextStyle"
+          />
+
+      <TextView
+          android:id="@+id/tv_dushi"
+          android:text="@string/dushi"
+          android:drawableLeft="@mipmap/dushi"
+          android:layout_columnWeight="1"
+          style="@style/SortTextStyle"
+          />
+      <TextView
+          android:id="@+id/tv_lishi"
+          android:text="@string/lishi"
+          android:drawableLeft="@mipmap/lishi"
+          android:layout_columnWeight="1"
+          style="@style/SortTextStyle"
+          />
+
+      <TextView
+          android:id="@+id/tv_wangyou"
+          android:text="@string/wangyou"
+          android:drawableLeft="@mipmap/wangyou"
+          android:layout_columnWeight="1"
+          style="@style/SortTextStyle"
+          />
+
+      <TextView
+          android:id="@+id/tv_kehuan"
+          android:text="@string/kehuan"
+          android:drawableLeft="@mipmap/kehuan"
+          android:layout_columnWeight="1"
+          style="@style/SortTextStyle"
+          />
+
+      <TextView
+          android:id="@+id/tv_kongbu"
+          android:text="@string/kongbu"
+          android:drawableLeft="@mipmap/kongbu"
+          android:layout_columnWeight="1"
+          style="@style/SortTextStyle"
+          />
+
+      <TextView
+          android:id="@+id/tv_quanben"
+          android:text="@string/quanben"
+          android:drawableLeft="@mipmap/quanben"
+          android:layout_columnWeight="1"
+          style="@style/SortTextStyle"
+          />
+
+      <TextView
+          android:id="@+id/tv_paihangbang"
+          android:text="@string/rank"
+          android:drawableLeft="@mipmap/rank"
+          android:layout_columnWeight="1"
+          style="@style/SortTextStyle"
+          />
+   </GridLayout>
+</com.xfwang.bookreading.widget.FlexibleScrollView>
+
