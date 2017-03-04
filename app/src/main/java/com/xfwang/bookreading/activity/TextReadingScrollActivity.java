@@ -21,11 +21,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.xfwang.bookreading.R;
 import com.xfwang.bookreading.adapter.DirectoryListAdapter;
+import com.xfwang.bookreading.adapter.DirectoryListViewAdapter;
 import com.xfwang.bookreading.adapter.SpaceItemDecoration;
 import com.xfwang.bookreading.api.ApiHelper;
 import com.xfwang.bookreading.bean.BookBrief;
@@ -73,8 +75,8 @@ public class TextReadingScrollActivity extends BaseActivity implements View.OnCl
                 mRefreshLayout.setRefreshing(false);
             }else if (msg.what == 2){   //点击目录
                 mChapterText = (ChapterText) msg.obj;
-                initView();
                 directoryWindow.dismiss();
+                initView();
             }
         }
     };
@@ -154,11 +156,12 @@ public class TextReadingScrollActivity extends BaseActivity implements View.OnCl
     }
 
     private PopupWindow directoryWindow;
-    private ImageView ivSelect;
-    private FloatingActionButton btnDown;
-    private EditText etSelect;
-    private RecyclerView rvDirectory;
+//    private ImageView ivSelect;
+//    private FloatingActionButton btnDown;
+//    private EditText etSelect;
+//    private RecyclerView rvDirectory;
     private SwipeRefreshLayout mRefreshLayout;
+    private ListView lvDirectory;
     private View mDirectorView;
 
     private boolean isBottom = false;
@@ -170,15 +173,16 @@ public class TextReadingScrollActivity extends BaseActivity implements View.OnCl
         directoryWindow.setFocusable(true);
         mDirectorView = LayoutInflater.from(this).inflate(R.layout.pop_window_directory,null,false);
         directoryWindow.setContentView(mDirectorView);
-        ivSelect = (ImageView) mDirectorView.findViewById(R.id.iv_select);
-        btnDown = (FloatingActionButton) mDirectorView.findViewById(R.id.btn_down);
-        rvDirectory = (RecyclerView) mDirectorView.findViewById(R.id.rv_directory);
-        etSelect = (EditText) mDirectorView.findViewById(R.id.et_select);
+//        ivSelect = (ImageView) mDirectorView.findViewById(R.id.iv_select);
+//        btnDown = (FloatingActionButton) mDirectorView.findViewById(R.id.btn_down);
+//        rvDirectory = (RecyclerView) mDirectorView.findViewById(R.id.rv_directory);
+//        etSelect = (EditText) mDirectorView.findViewById(R.id.et_select);
         mRefreshLayout = (SwipeRefreshLayout) mDirectorView.findViewById(R.id.refresh_layout_directory);
+        lvDirectory = (ListView) mDirectorView.findViewById(R.id.lv_directory);
 
-        rvDirectory.addItemDecoration(new SpaceItemDecoration((int) getResources().getDimension(R.dimen.recycler_space)));
-        btnDown.setOnClickListener(this);
-        ivSelect.setOnClickListener(this);
+//        rvDirectory.addItemDecoration(new SpaceItemDecoration((int) getResources().getDimension(R.dimen.recycler_space)));
+//        btnDown.setOnClickListener(this);
+//        ivSelect.setOnClickListener(this);
         mRefreshLayout.setOnRefreshListener(this);
     }
 
@@ -188,17 +192,17 @@ public class TextReadingScrollActivity extends BaseActivity implements View.OnCl
         updateDirectory(ApiHelper.BIQUGE_URL + mBookId);
     }
 
-    private DirectoryListAdapter mDirectoryListAdapter;
-    private LinearLayoutManager mLayoutManager;
+//    private DirectoryListAdapter mDirectoryListAdapter;
+//    private LinearLayoutManager mLayoutManager;
     /*
     * 初始化目录适配器
     * */
     private void initDirectoryAdapter() {
-        mLayoutManager = new LinearLayoutManager(this);
-        rvDirectory.setLayoutManager(mLayoutManager);
-        mDirectoryListAdapter = new DirectoryListAdapter(this,mBookBriefList,mHandler);
-        rvDirectory.setAdapter(mDirectoryListAdapter);
-
+//        mLayoutManager = new LinearLayoutManager(this);
+//        rvDirectory.setLayoutManager(mLayoutManager);
+//        mDirectoryListAdapter = new DirectoryListAdapter(this,mBookBriefList,mHandler);
+//        rvDirectory.setAdapter(mDirectoryListAdapter);
+        lvDirectory.setAdapter(new DirectoryListViewAdapter(this,mBookBriefList,mHandler));
     }
 
     private void initData(String chapterTextUrl) {
@@ -356,18 +360,16 @@ public class TextReadingScrollActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.iv_mu_lu:     //显示目录窗体
                 mUtilWindow.dismiss();
-                directoryWindow.showAtLocation(mToolBar,Gravity.LEFT,0,0);
+                directoryWindow.showAtLocation(mToolBar,Gravity.START,0,0);
                 break;
             case R.id.iv_night_mode:    //更新夜间模式
                 if (isNightMode){
                     mDirectorView.setBackgroundResource(R.color.text_bg_def);
                     mScrollView.setBackgroundResource(R.color.text_bg_def);
-//                    tvChapterName.setBackgroundResource(R.color.text_bg_def);
                     ivNightMode.setImageResource(R.mipmap.yueliang);
                 }else {
                     mDirectorView.setBackgroundResource(R.color.night_color);
                     mScrollView.setBackgroundResource(R.color.night_color);
-//                    tvChapterName.setBackgroundResource(R.color.night_color);
                     ivNightMode.setImageResource(R.mipmap.taiyang);
                 }
                 isNightMode = !isNightMode;
@@ -380,36 +382,6 @@ public class TextReadingScrollActivity extends BaseActivity implements View.OnCl
                     TextReadingPagerActivity.toActivity(TextReadingScrollActivity.this, mChapterText.getChapterUrl(), mChapterText.getBookId());
                     finish();
                 }
-            case R.id.btn_down:     //点击滑到目录底部或顶部
-                if (isBottom){
-                    mLayoutManager.scrollToPosition(0);
-                    btnDown.setImageResource(R.mipmap.down);
-                }else {
-                    mLayoutManager.scrollToPosition(mDirectoryListAdapter.getItemCount() - 1);
-                    btnDown.setImageResource(R.mipmap.up);
-                }
-                isBottom = !isBottom;
-                break;
-            case R.id.iv_select:    //滑到选定的章节
-                selectChapter();
-                break;
-        }
-    }
-
-    /*
-    * 滑到选定的章节
-    * */
-    private void selectChapter() {
-        String result = etSelect.getText().toString().trim();
-        if (result != null && !TextUtils.isEmpty(result)){
-            int number = Integer.valueOf(result);
-            if (number > mBookBriefList.size() - 1){
-                ToastUtils.shortToast(this,"还没写呢！！！");
-            }else if (number < 0){
-                ToastUtils.shortToast(this,"没有这一章！！！");
-            }else {
-                mLayoutManager.scrollToPosition(number);
-            }
         }
     }
 
@@ -450,9 +422,9 @@ public class TextReadingScrollActivity extends BaseActivity implements View.OnCl
 
     private void showTextReadingPopWindow(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            mUtilWindow.showAsDropDown(mToolBar,-10,10, Gravity.RIGHT);
+            mUtilWindow.showAsDropDown(mToolBar,-10,10, Gravity.END);
         }else {
-            mUtilWindow.showAtLocation(mToolBar,Gravity.RIGHT|Gravity.TOP,10,DensityUtils.dp2px(this,70));
+            mUtilWindow.showAtLocation(mToolBar,Gravity.END|Gravity.TOP,10,DensityUtils.dp2px(this,70));
         }
     }
 

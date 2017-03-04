@@ -20,12 +20,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xfwang.bookreading.R;
 import com.xfwang.bookreading.adapter.DirectoryListAdapter;
+import com.xfwang.bookreading.adapter.DirectoryListViewAdapter;
 import com.xfwang.bookreading.adapter.SpaceItemDecoration;
 import com.xfwang.bookreading.adapter.VPTextAdapter;
 import com.xfwang.bookreading.api.ApiHelper;
@@ -145,8 +147,6 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
         setContentView(R.layout.activity_text_reading_pager);
         ButterKnife.bind(this);
 
-//        mChapterTextUrl = getIntent().getStringExtra(CHAPTER_TEXT_URL);
-
         if (savedInstanceState == null){
             mChapterTextUrl = getIntent().getStringExtra(CHAPTER_TEXT_URL);
         }else {
@@ -197,14 +197,10 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
     }
 
     private PopupWindow directoryWindow;
-    private ImageView ivSelect;
-    private FloatingActionButton btnDown;
-    private EditText etSelect;
-    private RecyclerView rvDirectory;
     private SwipeRefreshLayout mRefreshLayout;
+    private ListView lvDirectory;
     private View mDirectorView;
 
-    private boolean isBottom = false;
     /*
     * 初始化目录窗体View
     * */
@@ -213,15 +209,9 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
         directoryWindow.setFocusable(true);
         mDirectorView = LayoutInflater.from(this).inflate(R.layout.pop_window_directory,null,false);
         directoryWindow.setContentView(mDirectorView);
-        ivSelect = (ImageView) mDirectorView.findViewById(R.id.iv_select);
-        btnDown = (FloatingActionButton) mDirectorView.findViewById(R.id.btn_down);
-        rvDirectory = (RecyclerView) mDirectorView.findViewById(R.id.rv_directory);
-        etSelect = (EditText) mDirectorView.findViewById(R.id.et_select);
         mRefreshLayout = (SwipeRefreshLayout) mDirectorView.findViewById(R.id.refresh_layout_directory);
+        lvDirectory = (ListView) mDirectorView.findViewById(R.id.lv_directory);
 
-        rvDirectory.addItemDecoration(new SpaceItemDecoration((int) getResources().getDimension(R.dimen.recycler_space)));
-        btnDown.setOnClickListener(this);
-        ivSelect.setOnClickListener(this);
         mRefreshLayout.setOnRefreshListener(this);
     }
 
@@ -231,16 +221,11 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
         updateDirectory(ApiHelper.BIQUGE_URL + mBookId);
     }
 
-    private DirectoryListAdapter mDirectoryListAdapter;
-    private LinearLayoutManager mLayoutManager;
     /*
     * 初始化目录适配器
     * */
     private void initDirectoryAdapter() {
-        mLayoutManager = new LinearLayoutManager(this);
-        rvDirectory.setLayoutManager(mLayoutManager);
-        mDirectoryListAdapter = new DirectoryListAdapter(this,mBookBriefList,mHandler);
-        rvDirectory.setAdapter(mDirectoryListAdapter);
+        lvDirectory.setAdapter(new DirectoryListViewAdapter(this,mBookBriefList,mHandler));
     }
 
     private void initData(String chapterTextUrl) {
@@ -375,6 +360,10 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
 
     private int mPagerCount;
 
+    /**
+     * 根据屏幕大小对文本进行分页
+     * @return
+     */
     private String[] getTextArray(){
         float density = getResources().getDisplayMetrics().density;
         float textSize = (float) SPUtils.get(this,SP_TEXT_SIZE,18F);
@@ -461,10 +450,6 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
         super.onDestroy();
         ButterKnife.unbind(this);
 
-//        if (mUtilWindow != null && mUtilWindow.isShowing()){
-//            mUtilWindow.dismiss();
-//        }
-
         if (directoryWindow != null && directoryWindow.isShowing()){
             directoryWindow.dismiss();
         }
@@ -487,7 +472,7 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.iv_more:   //弹出窗体
-//                showTextReadingPopWindow();
+                // TODO: 2017/3/4  show more window
                 break;
             case R.id.iv_back:
                 finish();
@@ -500,18 +485,15 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
                 break;
             case R.id.iv_to_big:    //加大字体
                 mTextSize += 1;
-//                tvContent.setTextSize(mTextSize);
                 SPUtils.put(TextReadingPagerActivity.this,SP_TEXT_SIZE,mTextSize);
                 ToastUtils.shortToast(this,"读到下一章字体才会变化哦！");
                 break;
             case R.id.iv_to_small:     //减小字体
                 mTextSize -= 1;
-//                tvContent.setTextSize(mTextSize);
                 SPUtils.put(TextReadingPagerActivity.this,SP_TEXT_SIZE,mTextSize);
                 ToastUtils.shortToast(this,"读到下一章字体才会变化哦！");
                 break;
             case R.id.iv_mu_lu:     //显示目录窗体
-//                mUtilWindow.dismiss();
                 directoryWindow.showAtLocation(mToolBar,Gravity.LEFT,0,0);
                 break;
             case R.id.iv_night_mode:    //更新夜间模式
@@ -529,7 +511,6 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
                 break;
             case R.id.iv_convert:   //翻页阅读
                 if (mChapterText != null) {
-//                    mUtilWindow.dismiss();
                     SPUtils.put(this,SP_IS_SCROLL_READING,true);
                     TextReadingScrollActivity.toActivity(TextReadingPagerActivity.this, mChapterText.getChapterUrl(), mChapterText.getBookId());
                     finish();
@@ -538,79 +519,8 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
             case R.id.iv_setting:
                 // TODO: 2017/3/3  show setting popWindow
                 break;
-
-            case R.id.btn_down:     //点击滑到目录底部或顶部
-                if (isBottom){
-                    mLayoutManager.scrollToPosition(0);
-                    btnDown.setImageResource(R.mipmap.down);
-                }else {
-                    mLayoutManager.scrollToPosition(mDirectoryListAdapter.getItemCount() - 1);
-                    btnDown.setImageResource(R.mipmap.up);
-                }
-                isBottom = !isBottom;
-                break;
-            case R.id.iv_select:    //滑到选定的章节
-                selectChapter();
-                break;
         }
     }
-
-    /*
-    * 滑到选定的章节
-    * */
-    private void selectChapter() {
-        String result = etSelect.getText().toString().trim();
-        if (result != null && !TextUtils.isEmpty(result)){
-            int number = Integer.valueOf(result);
-            if (number > mBookBriefList.size() - 1){
-                ToastUtils.shortToast(this,"还没写呢！！！");
-            }else if (number < 0){
-                ToastUtils.shortToast(this,"没有这一章！！！");
-            }else {
-                mLayoutManager.scrollToPosition(number);
-            }
-        }
-    }
-
-//    private ImageView ivToBig;
-//    private ImageView ivToSmall;
-//    private ImageView ivMuLu;
-//    private ImageView ivNightMode;
-//    private ImageView ivConvert;
-//    private PopupWindow mUtilWindow;
-//    /*
-//    * 显示toolbar的util窗口
-//    * */
-//    private void showTextReadingPopWindow() {
-//        mUtilWindow = new PopupWindow(DensityUtils.dp2px(this,120),DensityUtils.dp2px(this,240));
-//        mUtilWindow.setFocusable(true);
-//        View view = LayoutInflater.from(this).inflate(R.layout.pop_window_text_reading,null,false);
-//        mUtilWindow.setContentView(view);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            mUtilWindow.showAsDropDown(mToolBar,-10,10, Gravity.RIGHT);
-//        }else {
-//            mUtilWindow.showAtLocation(mToolBar,Gravity.RIGHT|Gravity.TOP,10,DensityUtils.dp2px(this,70));
-//        }
-//
-//        ivToBig = (ImageView) view.findViewById(R.id.iv_to_big);
-//        ivToSmall = (ImageView) view.findViewById(R.id.iv_to_small);
-//        ivMuLu = (ImageView) view.findViewById(R.id.iv_mu_lu);
-//        ivNightMode = (ImageView) view.findViewById(R.id.iv_night_mode);
-//        ivConvert = (ImageView) view.findViewById(R.id.iv_convert);
-//
-//        isNightMode = (boolean) get(TextReadingPagerActivity.this,SP_IS_NIGHT_MODE,false);
-//        if (isNightMode){
-//            ivNightMode.setImageResource(R.mipmap.taiyang);
-//        }else {
-//            ivNightMode.setImageResource(R.mipmap.yueliang);
-//        }
-//
-//        ivToBig.setOnClickListener(this);
-//        ivToSmall.setOnClickListener(this);
-//        ivMuLu.setOnClickListener(this);
-//        ivNightMode.setOnClickListener(this);
-//        ivConvert.setOnClickListener(this);
-//    }
 
     @Bind(R.id.tv_battery)
     TextView tvBattery;

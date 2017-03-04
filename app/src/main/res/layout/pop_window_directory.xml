@@ -1,66 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:background="@color/white"
+                android:background="@color/text_bg_def"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/ll"
-        android:gravity="center_vertical"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/tv_directory"
-            android:text="书籍目录"
+            android:text="@string/mu_lu"
+            android:layout_marginTop="10dp"
             android:textSize="14sp"
-            android:layout_weight="1"
-            android:textColor="@color/main_color"
+            android:textColor="@color/black"
             android:drawableLeft="@mipmap/line"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <EditText
-            android:id="@+id/et_select"
-            android:hint="0"
-            android:inputType="number"
-            android:layout_weight="5"
-            android:textSize="12sp"
-            android:background="@drawable/shape_text_bg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <ImageView
-            android:id="@+id/iv_select"
-            android:src="@mipmap/select"
-            android:layout_weight="1"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout_directory"
-        android:layout_below="@id/ll"
+        android:layout_below="@id/tv_directory"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_directory"
-            android:scrollbars="vertical"
+
+        <ListView
+            android:id="@+id/lv_directory"
+            android:fastScrollEnabled="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btn_down"
-        android:src="@mipmap/down"
-        app:backgroundTint="@color/main_color"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="60dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 </RelativeLayout>
