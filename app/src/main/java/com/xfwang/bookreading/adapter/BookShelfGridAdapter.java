@@ -15,6 +15,7 @@ import com.xfwang.bookreading.activity.TextReadingPagerActivity;
 import com.xfwang.bookreading.activity.TextReadingScrollActivity;
 import com.xfwang.bookreading.api.ApiHelper;
 import com.xfwang.bookreading.bean.BookEntity;
+import com.xfwang.bookreading.db.DBManager;
 import com.xfwang.bookreading.fragment.BooksFragment;
 import com.xfwang.bookreading.utils.DensityUtils;
 import com.xfwang.bookreading.utils.SPUtils;
@@ -35,12 +36,14 @@ public class BookShelfGridAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private View mView;
     private String mChapterIndex;
+    private List<BookEntity> mBookEntityOldList;
 
 
     public BookShelfGridAdapter(Context context, List<BookEntity> bookEntityList) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mBookEntityList = bookEntityList;
+        mBookEntityOldList = DBManager.get(context);
     }
 
     @Override
@@ -69,6 +72,16 @@ public class BookShelfGridAdapter extends RecyclerView.Adapter<RecyclerView.View
         final BookEntity bookEntity = mBookEntityList.get(position);
         Picasso.with(mContext).load(bookEntity.getBookIconUrl()).into(((ViewHolder)holder).ivBookIcon);
         ((ViewHolder)holder).tvBookName.setText(bookEntity.getBookName());
+
+
+        for (int i=0; i<mBookEntityOldList.size(); i++){
+            BookEntity bookEntityOld = mBookEntityOldList.get(i);
+            if (bookEntity.getBookId() == bookEntityOld.getBookId() && Integer.valueOf(bookEntity.getChapterNum()) > Integer.valueOf(bookEntityOld.getChapterNum())){
+                ((ViewHolder)holder).tvUpdate.setVisibility(View.VISIBLE);
+            }else {
+                ((ViewHolder)holder).tvUpdate.setVisibility(View.GONE);
+            }
+        }
 
 
         mView.setOnClickListener(new View.OnClickListener() {

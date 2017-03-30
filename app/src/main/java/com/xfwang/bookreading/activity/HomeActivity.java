@@ -1,6 +1,7 @@
 package com.xfwang.bookreading.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.xfwang.bookreading.R;
 import com.xfwang.bookreading.fragment.BooksFragment;
 import com.xfwang.bookreading.fragment.HomeTab;
+import com.xfwang.bookreading.service.BookUpdateService;
 import com.xfwang.bookreading.utils.DensityUtils;
 import com.xfwang.bookreading.utils.SPUtils;
 import com.xfwang.bookreading.widget.MyFragmentTabHost;
@@ -120,15 +122,26 @@ public class HomeActivity extends BaseActivity implements TabHost.OnTabChangeLis
                     showBookShelfPopWindow();
                 }
                 break;
-            case R.id.tv_list_or_grid:
-                //切换订阅书籍显示模式list or grid
-                shiftGridOrList();
-                break;
             case R.id.iv_search:
                 //进入搜索界面
                 startActivity(new Intent(this,SearchActivity.class));
                 break;
+            case R.id.tv_list_or_grid:
+                //切换订阅书籍显示模式list or grid
+                shiftGridOrList();
+                break;
+            case R.id.tv_sync_book_shelf:
+                //同步书架
+                syncBookShelf();
+                break;
         }
+    }
+
+    private void syncBookShelf() {
+        BooksFragment fragment = (BooksFragment) mFragmentManager.findFragmentByTag(mTabHost.getCurrentTabTag());
+
+        fragment.updateDate();
+        mBookShelfPopWindow.dismiss();
     }
 
     private boolean isBooksShowList = true;
@@ -149,15 +162,23 @@ public class HomeActivity extends BaseActivity implements TabHost.OnTabChangeLis
     }
 
     private TextView tvGridOrList;  //书架页面弹出窗的网格列表切换TextView
+    private TextView tvSyncBokShelf;
     private PopupWindow mBookShelfPopWindow;
     private void initBookShelfPopWindow() {
         mBookShelfPopWindow = new PopupWindow(DensityUtils.dp2px(this,120),DensityUtils.dp2px(this,200));
         mBookShelfPopWindow.setFocusable(true);
         View view = LayoutInflater.from(this).inflate(R.layout.pop_window_book_shelf,null,false);
         mBookShelfPopWindow.setContentView(view);
+        //点击外面消失
+        mBookShelfPopWindow.setOutsideTouchable(true);
+        mBookShelfPopWindow.setBackgroundDrawable(new BitmapDrawable());
 
         tvGridOrList = (TextView) view.findViewById(R.id.tv_list_or_grid);
+        tvSyncBokShelf = (TextView) view.findViewById(R.id.tv_sync_book_shelf);
+
         tvGridOrList.setOnClickListener(this);
+        tvSyncBokShelf.setOnClickListener(this);
+
         initGridOrListText();
     }
 

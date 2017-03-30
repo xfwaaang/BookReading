@@ -1,5 +1,9 @@
 package com.xfwang.bookreading.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -53,7 +57,6 @@ public class BooksFragment extends BaseFragment implements SwipeRefreshLayout.On
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initRefreshLayout();
 
     }
 
@@ -62,18 +65,16 @@ public class BooksFragment extends BaseFragment implements SwipeRefreshLayout.On
         super.onResume();
 
         updateDataFromLocal();
-//        if (NetworkUtils.isConnected(getActivity())){
-//            updateDate();
-//        }else {
-//            updateDataFromLocal();
-//        }
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        DBManager.clear(getActivity());
-        DBManager.put(getActivity(),mBookEntityList);
+        if (mBookEntityList != null) {
+            DBManager.clear(getActivity());
+            DBManager.put(getActivity(), mBookEntityList);
+        }
+
+        getActivity().unregisterReceiver(mBookUpdateReceiver);
     }
 
     @Override
@@ -88,9 +89,17 @@ public class BooksFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     @Override
     protected void initData() {
+        super.initData();
+        initRefreshLayout();
+
 //        updateDataFromLocal();
 
 //        updateDate();
+
+        mBookUpdateReceiver = new BookUpdateReceiver();
+        IntentFilter bookUpdateFilter = new IntentFilter(ACTION_BOOK_UPDATE);
+        getActivity().registerReceiver(mBookUpdateReceiver,bookUpdateFilter);
+
     }
 
     /*
@@ -102,7 +111,7 @@ public class BooksFragment extends BaseFragment implements SwipeRefreshLayout.On
         initView();
     }
 
-    private void updateDate(){
+    public void updateDate(){
         isLogin = (boolean) SPUtils.get(getActivity(), LoginActivity.SP_IS_LOGIN,false);
 
         boolean isHave = checkBookShelf(isLogin);
@@ -114,6 +123,7 @@ public class BooksFragment extends BaseFragment implements SwipeRefreshLayout.On
                     if (isAdded()){
                         initView();
                     }
+
                     DBManager.clear(getActivity());
                     DBManager.put(getActivity(),mBookEntityList);
                 }
@@ -130,10 +140,9 @@ public class BooksFragment extends BaseFragment implements SwipeRefreshLayout.On
             mBookEntityList = null;
             initView();
         }
-
     }
 
-    private boolean checkBookShelf(boolean isLogin){
+    public boolean checkBookShelf(boolean isLogin){
         if (isLogin){
             String ids = BmobUser.getCurrentUser(MyUser.class).getBookIds();
             mBookIds = ids == null ? "" : ids.replace("null","");
@@ -198,4 +207,18 @@ public class BooksFragment extends BaseFragment implements SwipeRefreshLayout.On
     public void onRefresh() {
         updateDate();
     }
+
+    public static final String ACTION_BOOK_UPDATE = "ACTION_BOOK_UPDATE";
+    private BookUpdateReceiver mBookUpdateReceiver;
+    public class BookUpdateReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction() == ACTION_BOOK_UPDATE) {
+                updateDate();
+                LogUtils.i(ACTION_BOOK_UPDATE);
+            }
+        }
+    }
+
 }

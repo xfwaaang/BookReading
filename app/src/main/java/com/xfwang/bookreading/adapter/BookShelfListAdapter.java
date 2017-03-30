@@ -16,6 +16,7 @@ import com.xfwang.bookreading.activity.TextReadingPagerActivity;
 import com.xfwang.bookreading.activity.TextReadingScrollActivity;
 import com.xfwang.bookreading.api.ApiHelper;
 import com.xfwang.bookreading.bean.BookEntity;
+import com.xfwang.bookreading.db.DBManager;
 import com.xfwang.bookreading.fragment.BooksFragment;
 import com.xfwang.bookreading.utils.DensityUtils;
 import com.xfwang.bookreading.utils.SPUtils;
@@ -33,6 +34,7 @@ public class BookShelfListAdapter extends RecyclerView.Adapter<RecyclerView.View
     private Context mContext;
     private LayoutInflater mInflater;
     private List<BookEntity> mBookEntityList;
+    private List<BookEntity> mBookEntityOldList;
     private String mChapterIndex;
     private int mChapterNum;
 
@@ -43,6 +45,7 @@ public class BookShelfListAdapter extends RecyclerView.Adapter<RecyclerView.View
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mBookEntityList = bookEntityList;
+        mBookEntityOldList = DBManager.get(context);
     }
 
     @Override
@@ -61,6 +64,8 @@ public class BookShelfListAdapter extends RecyclerView.Adapter<RecyclerView.View
         mView.setLayoutParams(params);
 
         final BookEntity bookEntity = mBookEntityList.get(position);
+//        BookEntity bookEntityOld = mBookEntityOldList.get(position);
+
         if (TextUtils.isEmpty(bookEntity.getBookIconUrl())){
             Picasso.with(mContext).load("http://www.biquge.com.tw/modules/article/images/nocover.jpg").into(((ViewHolder)holder).ivBookIcon);
         }else {
@@ -71,6 +76,15 @@ public class BookShelfListAdapter extends RecyclerView.Adapter<RecyclerView.View
         ((ViewHolder)holder).tvLastUpdateTime.setText(bookEntity.getLastUpdateTime());
 
         mChapterNum = Integer.valueOf(bookEntity.getChapterNum());
+
+        for (int i=0; i<mBookEntityOldList.size(); i++){
+            BookEntity bookEntityOld = mBookEntityOldList.get(i);
+            if (bookEntity.getBookId() == bookEntityOld.getBookId() && mChapterNum > Integer.valueOf(bookEntityOld.getChapterNum())){
+                ((ViewHolder)holder).tvUpdate.setVisibility(View.VISIBLE);
+            }else {
+                ((ViewHolder)holder).tvUpdate.setVisibility(View.GONE);
+            }
+        }
 
         ((ViewHolder)holder).tvChapter.setText(mChapterNum + "");
 

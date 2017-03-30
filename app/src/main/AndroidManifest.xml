@@ -36,6 +36,9 @@
         <activity android:name=".activity.SearchActivity"/>
         <activity android:name=".activity.SortDetailActivity"/>
         <activity android:name=".activity.LoginActivity"/>
+
+        <service android:name=".service.BookUpdateService"/>
+
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,7 +41,10 @@ import com.xfwang.bookreading.utils.LogUtils;
 import com.xfwang.bookreading.utils.SPUtils;
 import com.xfwang.bookreading.utils.ScreenUtils;
 import com.xfwang.bookreading.utils.ToastUtils;
+import com.xfwang.bookreading.widget.DepthPageTransformer;
 import com.xfwang.bookreading.widget.MyViewPager;
+import com.xfwang.bookreading.widget.ViewPagerScroller;
+import com.xfwang.bookreading.widget.ZoomOutPageTransformer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -61,7 +65,7 @@ import static com.xfwang.bookreading.utils.SPUtils.get;
 public class TextReadingPagerActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final String CHAPTER_TEXT_URL = "CHAPTER_TEXT_URL";      //章节正文链接
     public static final String SP_TEXT_SIZE = "SP_TEXT_SIZE";
-    private static final String SP_IS_NIGHT_MODE = "SP_IS_NIGHT_MODE";
+    public static final String SP_IS_NIGHT_MODE = "SP_IS_NIGHT_MODE";
     private static final String KEY_CHAPTER_TEXT_URL = "key_chapter_text_url";
     private static boolean isLogin;
 
@@ -79,12 +83,7 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
                 mRefreshLayout.setRefreshing(false);
             }else if (msg.what == 2){   //点击目录
                 mChapterText = (ChapterText) msg.obj;
-                if(mToolBar.getVisibility() != View.GONE){
-                    mToolBar.setVisibility(View.GONE);
-                }
-                if(mBottomWindow.getVisibility() != View.GONE){
-                    mBottomWindow.setVisibility(View.GONE);
-                }
+
                 directoryWindow.dismiss();
 
                 initView();
@@ -205,10 +204,13 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
     * 初始化目录窗体View
     * */
     private void initDirectory() {
-        directoryWindow = new PopupWindow(ScreenUtils.getScreenWidth(this)*3/4,ScreenUtils.getScreenHeight(this));
+        directoryWindow = new PopupWindow(ScreenUtils.getScreenWidth(this)*4/5,ScreenUtils.getScreenHeight(this));
         directoryWindow.setFocusable(true);
         mDirectorView = LayoutInflater.from(this).inflate(R.layout.pop_window_directory,null,false);
         directoryWindow.setContentView(mDirectorView);
+        //点击外面消失
+        directoryWindow.setOutsideTouchable(true);
+        directoryWindow.setBackgroundDrawable(new BitmapDrawable());
         mRefreshLayout = (SwipeRefreshLayout) mDirectorView.findViewById(R.id.refresh_layout_directory);
         lvDirectory = (ListView) mDirectorView.findViewById(R.id.lv_directory);
 
@@ -281,7 +283,8 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
                 }
 
                 if (mViewPager.getCurrentItem() == 0){
-                    toLastChapter();
+//                    toLastChapter();
+                    toLastChapterLastPager();
                 }
 
             }
@@ -314,6 +317,13 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
                     toNextChapter();
                 }
         });
+    }
+
+    //切换到上一章最后一页
+    private void toLastChapterLastPager() {
+        isLastPager = true;
+        toLastChapter();
+        isLastPager = false;
     }
 
     private void toLastChapter(){
@@ -353,7 +363,7 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
             tvChapterName.setText(mChapterText.getChapterName());
 
             initViewPager();
-//            getTextArray();
+
         }
 
     }
@@ -371,7 +381,7 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
         //屏幕每一行可以显示的字符数
         int perRowCharCount = (int) ((ScreenUtils.getScreenWidth(this) - 24*density) / (textSize*density));
         //每页屏幕可以显示文本的行数
-        int perPagerRowCount = (int) ((ScreenUtils.getScreenHeight(this) - 48*density) / (textSize*density + getResources().getDimension(R.dimen.text_view_line_space))) - 1;
+        int perPagerRowCount = (int) ((ScreenUtils.getScreenHeight(this) - 60*density) / (textSize*density + getResources().getDimension(R.dimen.text_view_line_space))) - 1;
 
         char[] replaceCharArray = new char[perRowCharCount];
         for (int i = 0; i < replaceCharArray.length; i++) {
@@ -400,6 +410,7 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
     }
 
     private VPTextAdapter mVPTextAdapter;
+    private boolean isLastPager = false;
     private void initViewPager() {
         String[] textArray = getTextArray();
         mTextSize = (float) get(this,SP_TEXT_SIZE,18F);
@@ -407,7 +418,19 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
         mVPTextAdapter = new VPTextAdapter(TextReadingPagerActivity.this,textArray,mTextSize);
         mViewPager.setAdapter(mVPTextAdapter);
 
-        tvPagerIndex.setText(1 + "/" + mPagerCount);
+        if (isLastPager){
+            mViewPager.setCurrentItem(mPagerCount - 1);
+            tvPagerIndex.setText(mPagerCount + "/" + mPagerCount);
+        }else {
+            tvPagerIndex.setText(1 + "/" + mPagerCount);
+        }
+
+        mViewPager.setPageTransformer(true,new DepthPageTransformer());
+//        mViewPager.setPageTransformer(true,new ZoomOutPageTransformer());
+
+//        ViewPagerScroller scroller = new ViewPagerScroller(this);
+//        scroller.setScrollDuration(500);
+//        scroller.initViewPagerScroll(mViewPager);//这个是设置切换过渡时间为2秒
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -494,6 +517,12 @@ public class TextReadingPagerActivity extends BaseActivity implements View.OnCli
                 ToastUtils.shortToast(this,"读到下一章字体才会变化哦！");
                 break;
             case R.id.iv_mu_lu:     //显示目录窗体
+                if (mToolBar.getVisibility() != View.GONE){
+                    mToolBar.setVisibility(View.GONE);
+                }
+                if (mBottomWindow.getVisibility() != View.GONE){
+                    mBottomWindow.setVisibility(View.GONE);
+                }
                 directoryWindow.showAtLocation(mToolBar,Gravity.LEFT,0,0);
                 break;
             case R.id.iv_night_mode:    //更新夜间模式

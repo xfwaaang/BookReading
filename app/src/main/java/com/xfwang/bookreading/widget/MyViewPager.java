@@ -12,7 +12,7 @@ import com.xfwang.bookreading.utils.ScreenUtils;
  * //可以禁止左右滑动
  */
 
-public class MyViewPager extends ViewPager {
+public class MyViewPager extends ViewPager  {
     private boolean noScroll = false;
 
     public MyViewPager(Context context) {
@@ -37,6 +37,7 @@ public class MyViewPager extends ViewPager {
 //    public void setNoScroll(boolean noScroll){
 //        this.noScroll = noScroll;
 //    }
+
 
 
 

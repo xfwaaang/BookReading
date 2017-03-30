@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -169,10 +170,13 @@ public class TextReadingScrollActivity extends BaseActivity implements View.OnCl
     * 初始化目录窗体View
     * */
     private void initDirectory() {
-        directoryWindow = new PopupWindow(ScreenUtils.getScreenWidth(this)*3/4,ScreenUtils.getScreenHeight(this));
+        directoryWindow = new PopupWindow(ScreenUtils.getScreenWidth(this)*4/5,ScreenUtils.getScreenHeight(this));
         directoryWindow.setFocusable(true);
         mDirectorView = LayoutInflater.from(this).inflate(R.layout.pop_window_directory,null,false);
         directoryWindow.setContentView(mDirectorView);
+        //点击外面消失
+        directoryWindow.setOutsideTouchable(true);
+        directoryWindow.setBackgroundDrawable(new BitmapDrawable());
 //        ivSelect = (ImageView) mDirectorView.findViewById(R.id.iv_select);
 //        btnDown = (FloatingActionButton) mDirectorView.findViewById(R.id.btn_down);
 //        rvDirectory = (RecyclerView) mDirectorView.findViewById(R.id.rv_directory);

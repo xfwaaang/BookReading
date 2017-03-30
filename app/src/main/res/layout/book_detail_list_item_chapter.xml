@@ -6,7 +6,7 @@
         android:id="@+id/tv_chapter_name"
         android:textSize="14sp"
         android:textColor="@color/gray"
-        android:padding="8dp"
+        android:padding="@dimen/text_padding"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

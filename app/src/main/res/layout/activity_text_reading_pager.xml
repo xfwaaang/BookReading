@@ -5,6 +5,7 @@
 
     <com.xfwang.bookreading.widget.MyViewPager
         android:id="@+id/view_pager"
+        android:background="@color/text_bg_def"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></com.xfwang.bookreading.widget.MyViewPager>
 

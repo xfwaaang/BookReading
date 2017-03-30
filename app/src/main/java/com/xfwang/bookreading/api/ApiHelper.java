@@ -128,8 +128,6 @@ public class ApiHelper {
             for (Element e : elements) {
                 Element imageE = e.getElementsByClass("image").get(0);
 
-                LogUtils.i("url:" + imageE.html());
-
                 if (bookBriefList != null){
                     BookBrief bean = new BookBrief();
                     bean.setBookUrl(imageE.getElementsByTag("a").get(0).attr("href"));
@@ -227,6 +225,7 @@ public class ApiHelper {
 
             }
 
+            bookBriefList.get(0).setLastChapter(es.get(es.size() - 1).text());
             bookBriefList.get(0).setLastChapterUrl(BIQUGE_URL + es.get(es.size() - 1).getElementsByTag("a").attr("href"));
 
         } catch (IOException e) {
@@ -271,19 +270,21 @@ public class ApiHelper {
      * @return
      * 获取订阅书籍列表数据
      */
-    private List<BookEntity> getBookEntityList(String[] urls){
+    public List<BookEntity> getBookEntityList(String[] urls){
         List<BookEntity> bookEntityList = new ArrayList<>();
 
         try {
             for (int i = 0; i < urls.length; i++) {
-                Elements elements = elements = Jsoup.connect(urls[i]).get().getElementsByClass("box_con");
+                Elements elements  = Jsoup.connect(urls[i]).get().getElementsByClass("box_con");
 
                 Element element1 = elements.get(0);
+                Elements es = elements.get(1).getElementById("list").getElementsByTag("dd");
 
                 BookEntity bookEntity = new BookEntity();
                 bookEntity.setBookId(urls[i].replace("//","/").split("/")[2]);
                 bookEntity.setBookName(element1.getElementById("info").getElementsByTag("h1").text());
-                bookEntity.setLatestChapterName(element1.getElementById("info").getElementsByTag("p").get(3).text());
+//                bookEntity.setLatestChapterName(element1.getElementById("info").getElementsByTag("p").get(3).text());
+                bookEntity.setLatestChapterName(es.get(es.size() - 1).text());
                 bookEntity.setLastUpdateTime(element1.getElementById("info").getElementsByTag("p").get(2).text());
                 bookEntity.setBookAuthor(element1.getElementById("info").getElementsByTag("p").get(0).text().substring(7));
                 bookEntity.setChapterNum(elements.get(1).getElementById("list").getElementsByTag("dd").size() + "");

@@ -1,6 +1,7 @@
 package com.xfwang.bookreading.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -134,7 +135,11 @@ public class BookDetailListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         final PopupWindow popupWindow = new PopupWindow(DensityUtils.dp2px(mContext,200),DensityUtils.dp2px(mContext,100));
         View view = mInflater.inflate(R.layout.layout_pop_window_select,null,false);
         popupWindow.setContentView(view);
+
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setFocusable(true);
+
         popupWindow.showAtLocation(holder.ivSelect,Gravity.CENTER,0,0);
 
         final EditText editText = (EditText) view.findViewById(R.id.et_select);
