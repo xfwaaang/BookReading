@@ -18,10 +18,7 @@
 <img width="173" height=“274” src="https://github.com/xfwangmm/BookReading/blob/1f5b4f0bd76bbaf70a739e7eadf3bc9927bbc99b/files/3.png"></img> 
 <img width="173" height=“274” src="https://github.com/xfwangmm/BookReading/blob/1f5b4f0bd76bbaf70a739e7eadf3bc9927bbc99b/files/4.png"></img> 
 <img width="173" height=“274” src="https://github.com/xfwangmm/BookReading/blob/1f5b4f0bd76bbaf70a739e7eadf3bc9927bbc99b/files/5.png"></img> 
-<img width="173" height=“274” src="https://github.com/xfwangmm/BookReading/blob/1f5b4f0bd76bbaf70a739e7eadf3bc9927bbc99b/files/6.png"></img> 
-<img width="173" height=“274” src="https://github.com/xfwangmm/BookReading/blob/1f5b4f0bd76bbaf70a739e7eadf3bc9927bbc99b/files/7.png"></img> 
-<img width="173" height=“274” src="https://github.com/xfwangmm/BookReading/blob/1f5b4f0bd76bbaf70a739e7eadf3bc9927bbc99b/files/8.png"></img> 
-<img width="173" height=“274” src="https://github.com/xfwangmm/BookReading/blob/1f5b4f0bd76bbaf70a739e7eadf3bc9927bbc99b/files/9.png"></img> 
+
 
 ## Gif Preview
 <img width="320" height=“590” src="https://github.com/xfwangmm/BookReading/blob/1f5b4f0bd76bbaf70a739e7eadf3bc9927bbc99b/files/temp.gif"></img>
